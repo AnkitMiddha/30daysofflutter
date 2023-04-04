@@ -3,11 +3,11 @@ import 'package:flutter_application_1/pages/login_page.dart';
 import 'pages/home_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.green),
       darkTheme: ThemeData(brightness: Brightness.dark),
       routes: {
-        "/": (context) => LoginPage(),
-        "/LoginPage": (context) => HomePage(),
+        "/": (context) => const LoginPage(),
+        "/LoginPage": (context) => const HomePage(),
       },
     );
   }
