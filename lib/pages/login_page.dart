@@ -13,14 +13,16 @@ class _LoginPageState extends State<LoginPage> {
   bool Changedbutton = false;
   final _formKey = GlobalKey<FormState>();
   moveToHome(BuildContext context) async {
-    setState(() {
-      Changedbutton = true;
-    });
-    await Future.delayed(Duration(seconds: 1));
-    Navigator.pushNamed(context, MyRoutes.homeRoute);
-    setState(() {
-      Changedbutton = false;
-    });
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        Changedbutton = true;
+      });
+      await Future.delayed(Duration(seconds: 1));
+      Navigator.pushNamed(context, MyRoutes.homeRoute);
+      setState(() {
+        Changedbutton = false;
+      });
+    }
   }
 
   @override
@@ -28,6 +30,8 @@ class _LoginPageState extends State<LoginPage> {
     return Material(
       color: Colors.white,
       child: SingleChildScrollView(
+        //// Assign here
+
         child: Form(
           key: _formKey,
           child: Column(
@@ -54,14 +58,14 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: const InputDecoration(
-                          hintText: "Enter Username", labelText: "Username"),
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return "Username cannot be Empty";
                         }
                         return null;
                       },
+                      decoration: const InputDecoration(
+                          hintText: "Enter Username", labelText: "Username"),
                       onChanged: (value) {
                         name = value;
                         setState(() {});
@@ -74,8 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: "Password",
                       ),
                       validator: (value) {
-                        if (value.isEmpty) {
-                          return "Username cannot be Empty";
+                        if (value!.isEmpty) {
+                          return "Password cannot be empty";
+                        } else if (value.length < 6) {
+                          return "Password length should be greater than 6";
                         }
                         return null;
                       },
